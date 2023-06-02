@@ -7,21 +7,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("api/v1/trip")
 public class TripController {
 
-//    private final Trip trip;
+    //    private final Trip trip;
     @Autowired
-//    public TripController(final Trip trip){
-//        this.trip = trip;
-//    }
     JdbcTemplate jdbcTemplate;
 
     @GetMapping
@@ -29,7 +26,7 @@ public class TripController {
         ArrayList<Trip> trips = new ArrayList<>();
 
         Statement statement = this.jdbcTemplate.getDataSource().getConnection().createStatement();
-        ResultSet set = statement.executeQuery("select * from trip");
+        ResultSet set = statement.executeQuery("SELECT * FROM trip");
         while (set.next()) {
             trips.add(Trip.fillFromResultSet(set));
         }
@@ -38,9 +35,20 @@ public class TripController {
         return trips;
     }
 
-//    @GetMapping(path = "/{startpoint}/{endpoint}")
-//    public Trip findByStartpoint(@PathVariable final String startpoint, String endpoint ){
-//        Optional<Trip> trip = this.trip.findByStartpoint(startpoint, endpoint);
-//
-//    }
+    @GetMapping(path = "/{startPoint}/{endpoint}")
+    public ArrayList<Trip> findByStartpoint(@PathVariable("startPoint") final String startPoint, @PathVariable("endpoint") final String endpoint) {
+        final ArrayList<Trip> trips = new ArrayList<>();
+        try {
+            PreparedStatement statement = this.jdbcTemplate.getDataSource().getConnection().prepareStatement("SELECT * FROM trip WHERE endpoint = ? AND startpoint = ? ");
+            statement.setString(1, endpoint);
+            statement.setString(2, startPoint);
+            ResultSet set = statement.executeQuery();
+            while (set.next()) {
+                trips.add(Trip.fillFromResultSet(set));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return trips;
+    }
 }
