@@ -16,8 +16,6 @@ import java.util.ArrayList;
 @RestController
 @RequestMapping("api/v1/trip")
 public class TripController {
-
-    //    private final Trip trip;
     @Autowired
     JdbcTemplate jdbcTemplate;
 
