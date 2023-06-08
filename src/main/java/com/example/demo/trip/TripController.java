@@ -48,4 +48,21 @@ public class TripController {
         }
         return trips;
     }
+
+    @GetMapping(path = "/{startpoint}/{endpoint}")
+    public ArrayList<Trip> findByStartpoint(@PathVariable("startpoint") final String startpoint, @PathVariable("endpoint") final String endpoint) {
+        final ArrayList<Trip> trips = new ArrayList<>();
+        try {
+            PreparedStatement statement = this.jdbcTemplate.getDataSource().getConnection().prepareStatement("SELECT * FROM trip WHERE startpoint = ? AND  endpoint = ?");
+            statement.setString(1, startpoint);
+            statement.setString(2, endpoint);
+            ResultSet set = statement.executeQuery();
+            while (set.next()) {
+                trips.add(Trip.fillFromResultSet(set));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return trips;
+    }
 }
