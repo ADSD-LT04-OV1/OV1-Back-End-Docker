@@ -2,6 +2,7 @@ package com.example.demo.trip;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 
 public class Trip {
     private int id;
@@ -13,10 +14,11 @@ public class Trip {
     private double duration;
     private double distance;
     private double price;
+    private Date begintime;
 
     public Trip (int id, String emission, String startpoint, String stoppoints,
                  String endpoint, String vehicleType, double duration,
-                 double distance, double price)
+                 double distance, double price, Date begintime)
     {
         this.id = id;
         this.emission = emission;
@@ -26,7 +28,7 @@ public class Trip {
         this.vehicleType = vehicleType;
         this.duration = duration;
         this.distance = distance;
-        this.price = price;
+        this.begintime = begintime;
     }
 
     public int getId() {
@@ -73,6 +75,10 @@ public class Trip {
         return vehicleType;
     }
 
+    public Date getBegintime() {
+        return begintime;
+    }
+
     public void setVehicleType(String vehicleType) {
         this.vehicleType = vehicleType;
     }
@@ -101,10 +107,15 @@ public class Trip {
         this.price = price;
     }
 
+    public void setBegintime(Date begintime){
+        this.begintime = begintime;
+    }
+
     static public Trip fillFromResultSet(ResultSet set)throws SQLException{
         return new Trip(set.getInt("id"), set.getString("emission"),
                 set.getString("startpoint"), set.getString("stoppoints"),
                 set.getString("endpoint"), set.getString("vehicletype"),
-                set.getDouble("duration"), set.getDouble("distance"), set.getDouble("price"));
+                set.getDouble("duration"), set.getDouble("distance"), set.getDouble("price"),
+                set.getDate("begintime"));
     }
 }
