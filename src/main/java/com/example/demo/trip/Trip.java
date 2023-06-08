@@ -2,6 +2,8 @@ package com.example.demo.trip;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.Date;
 
 public class Trip {
@@ -14,11 +16,11 @@ public class Trip {
     private double duration;
     private double distance;
     private double price;
-    private Date begintime;
+    private Timestamp begintime;
 
     public Trip (int id, String emission, String startpoint, String stoppoints,
                  String endpoint, String vehicleType, double duration,
-                 double distance, double price, Date begintime)
+                 double distance, double price, Timestamp begintime)
     {
         this.id = id;
         this.emission = emission;
@@ -28,6 +30,7 @@ public class Trip {
         this.vehicleType = vehicleType;
         this.duration = duration;
         this.distance = distance;
+        this.price = price;
         this.begintime = begintime;
     }
 
@@ -75,6 +78,7 @@ public class Trip {
         return vehicleType;
     }
 
+
     public Date getBegintime() {
         return begintime;
     }
@@ -116,6 +120,6 @@ public class Trip {
                 set.getString("startpoint"), set.getString("stoppoints"),
                 set.getString("endpoint"), set.getString("vehicletype"),
                 set.getDouble("duration"), set.getDouble("distance"), set.getDouble("price"),
-                set.getDate("begintime"));
+                set.getTimestamp("begintime"));
     }
 }
