@@ -1,5 +1,7 @@
 package com.example.demo.trip;
 
+import org.hibernate.dialect.function.TruncFunction;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
@@ -16,11 +18,11 @@ public class Trip {
     private double duration;
     private double distance;
     private double price;
-    private Timestamp begintime;
+    private int begintime;
 
     public Trip (int id, String emission, String startpoint, String stoppoints,
                  String endpoint, String vehicleType, double duration,
-                 double distance, double price, Timestamp begintime)
+                 double distance, double price, int begintime)
     {
         this.id = id;
         this.emission = emission;
@@ -79,7 +81,7 @@ public class Trip {
     }
 
 
-    public Timestamp getBegintime() {
+    public int getBegintime() {
         return begintime;
     }
 
@@ -111,7 +113,7 @@ public class Trip {
         this.price = price;
     }
 
-    public void setBegintime(Timestamp begintime){
+    public void setBegintime(int begintime){
         this.begintime = begintime;
     }
 
@@ -120,6 +122,6 @@ public class Trip {
                 set.getString("startpoint"), set.getString("stoppoints"),
                 set.getString("endpoint"), set.getString("vehicletype"),
                 set.getDouble("duration"), set.getDouble("distance"), set.getDouble("price"),
-                set.getTimestamp("begintime"));
+                set.getInt("begintime"));
     }
 }
