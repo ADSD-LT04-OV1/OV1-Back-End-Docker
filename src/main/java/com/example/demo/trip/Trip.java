@@ -79,7 +79,7 @@ public class Trip {
     }
 
 
-    public Date getBegintime() {
+    public Timestamp getBegintime() {
         return begintime;
     }
 
@@ -111,7 +111,7 @@ public class Trip {
         this.price = price;
     }
 
-    public void setBegintime(Date begintime){
+    public void setBegintime(Timestamp begintime){
         this.begintime = begintime;
     }
 
