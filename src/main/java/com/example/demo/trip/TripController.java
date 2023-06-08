@@ -33,13 +33,12 @@ public class TripController {
         return trips;
     }
 
-    @GetMapping(path = "/{startPoint}/{endpoint}")
-    public ArrayList<Trip> findByStartpoint(@PathVariable("startPoint") final String startPoint, @PathVariable("endpoint") final String endpoint) {
+    @GetMapping(path = "/{id}")
+    public ArrayList<Trip> findById(@PathVariable("id") final int id) {
         final ArrayList<Trip> trips = new ArrayList<>();
         try {
-            PreparedStatement statement = this.jdbcTemplate.getDataSource().getConnection().prepareStatement("SELECT * FROM trip WHERE endpoint = ? AND startpoint = ? ");
-            statement.setString(1, endpoint);
-            statement.setString(2, startPoint);
+            PreparedStatement statement = this.jdbcTemplate.getDataSource().getConnection().prepareStatement("SELECT * FROM trip WHERE id = ?");
+            statement.setInt(1, id);
             ResultSet set = statement.executeQuery();
             while (set.next()) {
                 trips.add(Trip.fillFromResultSet(set));
