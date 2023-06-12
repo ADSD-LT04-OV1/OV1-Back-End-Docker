@@ -4,9 +4,6 @@ import org.hibernate.dialect.function.TruncFunction;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Time;
-import java.sql.Timestamp;
-import java.util.Date;
 
 public class Trip {
     private int id;
@@ -19,10 +16,11 @@ public class Trip {
     private double distance;
     private double price;
     private int begintime;
+    private int endtime;
 
     public Trip (int id, String emission, String startpoint, String stoppoints,
                  String endpoint, String vehicleType, double duration,
-                 double distance, double price, int begintime)
+                 double distance, double price, int begintime, int endtime)
     {
         this.id = id;
         this.emission = emission;
@@ -34,6 +32,7 @@ public class Trip {
         this.distance = distance;
         this.price = price;
         this.begintime = begintime;
+        this.endtime = endtime;
     }
 
     public int getId() {
@@ -76,11 +75,13 @@ public class Trip {
         this.endpoint = endpoint;
     }
 
+    public void setEndtime(int endtime) { this.endtime = endtime; }
+
     public String getVehicleType() {
         return vehicleType;
     }
 
-
+    public int getEndtime() { return endtime; }
     public int getBegintime() {
         return begintime;
     }
@@ -122,6 +123,6 @@ public class Trip {
                 set.getString("startpoint"), set.getString("stoppoints"),
                 set.getString("endpoint"), set.getString("vehicletype"),
                 set.getDouble("duration"), set.getDouble("distance"), set.getDouble("price"),
-                set.getInt("begintime"));
+                set.getInt("begintime"), set.getInt("endtime"));
     }
 }
