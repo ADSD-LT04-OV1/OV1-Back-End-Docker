@@ -15,7 +15,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 @RestController
-@RequestMapping("api/v1/trip")
+@RequestMapping("api/v1/trips")
 public class TripController {
     @Autowired
     JdbcTemplate jdbcTemplate;
